@@ -99,11 +99,13 @@ def context_listener(data: Sample):
         # Extract metric name and service name from the key expression
         topic_parts = key_expr.split("/")
         context = topic_parts[-1]
+        agent_id = topic_parts[-2]
         metric = "colmena_context_metric"
         context_doc = f"Context Metric for {context}"
 
         # Labels
         labels = {
+            "agent_id": agent_id,
             "context": context,
             **payload_dict,
         }
@@ -137,11 +139,13 @@ def start_etl():
         logger.info(f"Using Zenoh configuration file: {ZENOH_CONFIG_FILE}")
 
         # Declare subscribers
-        role_subscriber = session.declare_subscriber(f"colmena/metrics/**", role_listener)
-        logger.info(f"Subscribed to colmena/metrics/{AGENT_ID}/**")
+        metrics_string = "colmena/metrics/**"
+        role_subscriber = session.declare_subscriber(metrics_string, role_listener)
+        logger.info(f"Subscribed to {metrics_string}")
 
-        context_subscriber = session.declare_subscriber(f"colmena/contexts/{AGENT_ID}/**", context_listener)
-        logger.info(f"Subscribed to colmena/contexts/**")
+        context_string = "colmena/contexts/**"
+        context_subscriber = session.declare_subscriber(context_string, context_listener)
+        logger.info(f"Subscribed to {context_string}")
 
         while True:
             pass  # Keeps running
