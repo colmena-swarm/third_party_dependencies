@@ -17,6 +17,7 @@ This work has been implemented within the context of COLMENA project.
 """
 import logging
 import json
+import signal
 from prometheus_client import Gauge, start_http_server
 from zenoh import open, Config, Sample
 from metrics_etl.config import AGENT_ID, ZENOH_CONFIG_FILE, PROMETHEUS_PORT, VERSION
@@ -143,8 +144,8 @@ def start_etl():
         context_subscriber = session.declare_subscriber(f"colmena/contexts/{AGENT_ID}/**", context_listener)
         logger.info(f"Subscribed to colmena/contexts/**")
 
-        while True:
-            pass  # Keeps running
+        signal.pause()
+            time.sleep(1)  # Keeps running
 
     except Exception as error:
         logger.error(f"Failed to start ETL: {error}")

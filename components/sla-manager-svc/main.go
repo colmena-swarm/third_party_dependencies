@@ -201,7 +201,7 @@ func createMainConfig() *viper.Viper {
 	logs.GetLogger().Info(pathLOG + "[Configuration] Setting configuration values ...")
 
 	// CheckPeriod
-	config.SetDefault(cfg.CheckPeriodPropertyName, cfg.DefaultCheckPeriod)
+	setConfigValue(config, cfg.CheckPeriodPropertyName, cfg.DefaultCheckPeriod.String())
 
 	// TransientTime
 	config.SetDefault(cfg.TransientTimePropertyName, cfg.DefaultTransientTime)
