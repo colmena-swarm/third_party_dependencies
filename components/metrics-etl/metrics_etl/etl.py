@@ -139,10 +139,10 @@ def start_etl():
 
         # Declare subscribers
         role_subscriber = session.declare_subscriber(f"colmena/metrics/**", role_listener)
-        logger.info(f"Subscribed to colmena/metrics/{AGENT_ID}/**")
+        logger.info(f"Subscribed to colmena/metrics/**")
 
         context_subscriber = session.declare_subscriber(f"colmena/contexts/{AGENT_ID}/**", context_listener)
-        logger.info(f"Subscribed to colmena/contexts/**")
+        logger.info(f"Subscribed to colmena/contexts/{AGENT_ID}/**")
 
         while True:
             time.sleep(1)  # Keeps running without spinning the CPU
