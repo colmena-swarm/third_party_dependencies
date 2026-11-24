@@ -24,7 +24,7 @@ func TestInsertContext(t *testing.T) {
 	}
 
 	// Set up the expected query and response
-	mock.ExpectExec("INSERT INTO dockerContextDefinitions").
+	mock.ExpectExec("INSERT OR REPLACE INTO dockerContextDefinitions").
 		WithArgs(context.ID, context.ImageID).
 		WillReturnResult(sqlmock.NewResult(1, 1)) // Mock the result of the query
 
